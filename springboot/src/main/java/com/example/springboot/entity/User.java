@@ -34,29 +34,8 @@ public class User {
     @JsonIgnore //防止传输泄露密码
     private String password;
 
-    /**
-     * 昵称
-     */
-    private String nickName;
+    private int isAdmin;
+    private int rid;
 
-    /**
-     * 年龄
-     */
-    private int age;
-
-    /**
-     * 性别
-     */
-    private String sex;
-
-    /**
-     * 地址
-     */
-    private String address;
-
-    /**
-     * 头像
-     */
-    private String avatar;
 
 }

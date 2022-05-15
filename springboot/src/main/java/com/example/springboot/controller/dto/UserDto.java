@@ -18,12 +18,7 @@ public class UserDto {
      */
     private String password;
 
-    /**
-     * 昵称
-     */
-    private String nickName;
+    private int isAdmin;
+    private int rid;
 
-
-//    private String avatar;
-    private String address;
 }

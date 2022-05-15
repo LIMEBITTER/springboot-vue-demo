@@ -43,8 +43,12 @@ public class UserService extends ServiceImpl<UserMapper,User>{
      */
     public UserDto login(UserDto userDto) {
         User one = getUserInfo(userDto);
+        System.out.println("userService=====login==User"+one);
+//        System.out.println("userService=====login==userDto"+userDto);
         if (one != null) {
             BeanUtils.copyProperties(one, userDto);
+            System.out.println("userService=====login==userDto"+userDto);
+
             return userDto;
         } else {
             throw new CustomException(Constants.CODE_666,"用户或密码错误");
@@ -84,6 +88,7 @@ public class UserService extends ServiceImpl<UserMapper,User>{
         User one;
         try {
             one=getOne(wrapper);//从数据库查询信息
+            System.out.println("UserService=======getUserInfo"+one);
         } catch (Exception e) {
             L0G.error(e);//抛出错误日志
             throw new CustomException(Constants.CODE_667,"用户已经存在");

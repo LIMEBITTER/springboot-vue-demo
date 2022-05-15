@@ -96,7 +96,10 @@ public class UserController {
     public Result login(@RequestBody UserDto userDto){ //RequestBody :将前端的json变成后端的java对象
         String username = userDto.getUsername();
         String password = userDto.getPassword();
-        System.out.println("username"+username+"password"+password);
+        int is_admin = userDto.getIsAdmin();
+        int rid = userDto.getRid();
+        System.out.println("UserController======username,password"+username+","+password);
+        System.out.println("UserController======is_admin+rid"+is_admin+","+rid);
 
         //hutool工具类校验是否姓名或者密码为空
         if(StrUtil.isBlank(username) ||StrUtil.isBlank(password)){

@@ -24,22 +24,22 @@
             </el-menu-item>
         </el-submenu>
 
-        <el-submenu index="2">
+        <el-submenu index="2" v-if="user_role.isAdmin===1">
             <template slot="title">
                 <i class="el-icon-menu"></i>
                 <span slot="title">人员管理</span>
             </template>
             <el-submenu index="2-1">
                 <template slot="title">信息管理</template>
-                <el-menu-item index="/user">
-                    <i class="el-icon-s-custom"></i>
-                    <span slot="title">后台管理人员</span>
-                </el-menu-item>
-                <el-menu-item index="/resident">
+<!--                <el-menu-item index="/admin/user">-->
+<!--                    <i class="el-icon-s-custom"></i>-->
+<!--                    <span slot="title">后台管理人员</span>-->
+<!--                </el-menu-item>-->
+                <el-menu-item index="/admin/resident">
                     <i class="el-icon-s-custom"></i>
                     <span slot="title">小区居住人员</span>
                 </el-menu-item>
-                <el-menu-item index="/outsider">
+                <el-menu-item index="/admin/outsider">
                     <i class="el-icon-s-custom"></i>
                     <span slot="title">非小区人员</span>
                 </el-menu-item>
@@ -47,11 +47,11 @@
 
             <el-submenu index="2-2">
                 <template slot="title">出入管理</template>
-                <el-menu-item index="/residentTravel">
+                <el-menu-item index="/admin/residentTravel">
                     <i class="el-icon-s-custom"></i>
                     <span slot="title">小区人员出入</span>
                 </el-menu-item>
-                <el-menu-item index="/outsiderTravel">
+                <el-menu-item index="/admin/outsiderTravel">
                     <i class="el-icon-s-custom"></i>
                     <span slot="title">非小区人员出入</span>
                 </el-menu-item>
@@ -59,7 +59,7 @@
 
             <el-submenu index="2-3">
                 <template slot="title">健康管理</template>
-                <el-menu-item index="/health">
+                <el-menu-item index="/admin/health">
                     <i class="el-icon-s-custom"></i>
                     <span slot="title">人员健康信息</span>
                 </el-menu-item>
@@ -67,14 +67,38 @@
 
             <el-submenu index="2-4">
                 <template slot="title">志愿者值班管理</template>
-                <el-menu-item index="/volunteer">
+                <el-menu-item index="/admin/volunteer">
                     <i class="el-icon-s-custom"></i>
                     <span slot="title">小区志愿者人员</span>
                 </el-menu-item>
             </el-submenu>
         </el-submenu>
 
-        <el-submenu index="3">
+        <el-submenu index="3" v-if="user_role.isAdmin===0">
+            <template slot="title">
+                <i class="el-icon-menu"></i>
+                <span slot="title">信息填报</span>
+            </template>
+
+
+                <el-menu-item index="/users/basicInfo">
+                    <i class="el-icon-s-custom"></i>
+                    <span slot="title">基本信息填报</span>
+                </el-menu-item>
+                <el-menu-item index="/users/travelInfo">
+                    <i class="el-icon-s-custom"></i>
+                    <span slot="title">出入申报</span>
+                </el-menu-item>
+                <el-menu-item index="/users/HealthInfo">
+                    <i class="el-icon-s-custom"></i>
+                    <span slot="title">健康申报</span>
+                </el-menu-item>
+            </el-submenu>
+
+
+
+
+        <el-submenu index="4">
             <template slot="title">
                 <i class="el-icon-menu"></i>
                 <span>可视化</span>
@@ -95,6 +119,15 @@
 <script>
     export default {
         name: "Aside",
+        data(){
+            return{
+                user_role: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
+
+            }
+        },
+        // created() {
+        //     console.log('user_role',this.user_role.isAdmin)
+        // },
         props: {
             isCollapse: Boolean,
             logoTextShow: Boolean
