@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.springboot.controller.dto.ResidentDto;
 import com.example.springboot.controller.dto.VolunteerDto;
 import com.example.springboot.entity.Resident;
 
@@ -24,5 +25,9 @@ public interface ResidentService extends IService<Resident> {
 
    //两个分页信息
     IPage<Resident> selectLocalPeople(Wrapper<Resident> wrapper,IPage page);
+
+    int save2(ResidentDto residentDto);
+
+    boolean updateUserRId(ResidentDto residentDto);
 //    IPage<Resident> selectNonLocalPeople(Wrapper<Resident> wrapper, Page page);
 }

@@ -6,7 +6,7 @@
 
 <mapper namespace="com.example.springboot.mapper.UserMapper">
 
-    <update id="update">
+    <update id="updateRId">
         update user
         <set>
             <if test="username!=null">

@@ -27,8 +27,8 @@
                     <el-form-item label="电话" prop="tel" size="large">
                         <el-input v-model="form.tel" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item label="是否为本小区人员" prop="localPeople" size="large">
-                        <el-radio-group v-model="form.localPeople">
+                    <el-form-item label="是否为本小区人员" prop="local_people" size="large">
+                        <el-radio-group v-model="form.local_people">
                             <el-radio label="是" value="是"></el-radio>
                             <el-radio label="否" value="否"></el-radio>
                         </el-radio-group>
@@ -118,6 +118,9 @@
             if (localStorage.getItem('active')===null){
                 localStorage.setItem('active',1)
             }
+            let userInfo = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+            this.form.uid = userInfo.id
+            console.log('created==========',userInfo.id)
         },
         methods:{
             // 步骤条下一步的方法
@@ -134,8 +137,8 @@
                 this.$refs['ruleForm'].validate(valid=>{
                     console.log('表单校验',valid)
                     if(valid){
-                        console.log('表单合法！')
-                        request.post("/resident",this.form).then(res =>{
+                        console.log('表单合法！',this.form)
+                        request.post("/resident/save2",this.form).then(res =>{
                             //判断是否保存成功
                             console.log('post后端')
                             if(res) {

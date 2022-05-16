@@ -19,7 +19,7 @@
                 <i class="el-icon-menu"></i>
                 <span>用户</span>
             </template>
-            <el-menu-item index="person">
+            <el-menu-item index="/person">
                 <span slot="title">用户信息</span>
             </el-menu-item>
         </el-submenu>

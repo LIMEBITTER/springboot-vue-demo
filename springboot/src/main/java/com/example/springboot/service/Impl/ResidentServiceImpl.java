@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.springboot.controller.dto.ResidentDto;
 import com.example.springboot.controller.dto.VolunteerDto;
 import com.example.springboot.entity.Resident;
 import com.example.springboot.mapper.ResidentMapper;
@@ -48,6 +49,16 @@ public class ResidentServiceImpl extends ServiceImpl<ResidentMapper, Resident> i
     @Override
     public IPage<Resident> selectLocalPeople(Wrapper<Resident> wrapper,IPage page) {
         return residentMapper.getLocalResident(wrapper,page);
+    }
+
+    @Override
+    public int save2(ResidentDto residentDto) {
+        return residentMapper.save2(residentDto);
+    }
+
+    @Override
+    public boolean updateUserRId(ResidentDto residentDto) {
+        return residentMapper.updateUserRId(residentDto);
     }
 
 //    @Override

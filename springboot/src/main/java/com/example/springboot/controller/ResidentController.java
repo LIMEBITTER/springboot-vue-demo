@@ -4,8 +4,10 @@ package com.example.springboot.controller;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.springboot.controller.dto.ResidentDto;
 import com.example.springboot.entity.Resident;
 import com.example.springboot.entity.User;
 import com.example.springboot.entity.Volunteer;
@@ -73,7 +75,20 @@ public class ResidentController {
         }
     }
 
+    /**用户登记
+     * 新增或者删除
+     * @param residentDto
+     * @return
+     */
+    @PostMapping("/save2")
+    private boolean save2(@RequestBody ResidentDto residentDto) {
+        int save2= residentService.save2(residentDto);
+        System.out.println("获取插入后的id========="+residentDto.getId());
+        boolean flag = residentService.updateUserRId(residentDto);
 
+
+        return flag;
+    }
 
     /**
      * 删除操作

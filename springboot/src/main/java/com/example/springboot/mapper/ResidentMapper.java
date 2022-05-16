@@ -5,12 +5,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.springboot.controller.dto.ResidentDto;
 import com.example.springboot.controller.dto.VolunteerDto;
 import com.example.springboot.entity.Resident;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -44,4 +42,10 @@ public interface ResidentMapper extends BaseMapper<Resident> {
 
     List<Resident> getAllPerson();
 
+    @Insert("insert into resident(id,name,sex,age,address,tel,local_people) VALUES(#{id},#{name},#{sex},#{age},#{address},#{tel},#{local_people})")
+    @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
+    int save2(ResidentDto residentDto);
+
+    @Update("update user set rid=#{id} where id = #{uid}")
+    boolean updateUserRId(ResidentDto residentDto);
 }
