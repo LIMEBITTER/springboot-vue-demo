@@ -23,26 +23,12 @@
                     @confirm="delBatch">
                 <el-button type="danger" slot="reference" class="ml-5">批量删除 <i class="el-icon-remove-outline"></i></el-button>
             </el-popconfirm>
-
-            <!--导入导出-->
-            <el-upload  class="upload-demo" action="http://localhost:9090/user/import"
-                        style="display: inline-block"
-                        :on-success="handleImportSuccess"
-                        :show-file-list="false"
-                        accept=".xls,.xlsx"
-                        :on-error="handleImportError"
-            >
-                <el-button type="primary"  class="ml-5">导入 <i class="el-icon-bottom"></i></el-button>
-            </el-upload>
-            <el-button type="primary"  @click="exp"   class="ml-5">导出 <i class="el-icon-top"></i></el-button>
         </div>
 
         <el-table :data="tableData" border stripe :header-cell-class-name="headerBg"  @selection-change="handleSelectionChange">
             <el-table-column
                     type="selection"
                     width="55">
-            </el-table-column>
-            <el-table-column prop="id" label="id" width="80">
             </el-table-column>
             <el-table-column prop="name" label="姓名" width="120">
             </el-table-column>
@@ -56,22 +42,13 @@
             </el-table-column>
             <el-table-column prop="totalman" label="出行人数">
             </el-table-column>
-<!--            <el-table-column prop="tel" label="电话">-->
-<!--            </el-table-column>-->
+            <!--            <el-table-column prop="tel" label="电话">-->
+            <!--            </el-table-column>-->
 
             <el-table-column label="操作"  width="200" align="center">
                 <template slot-scope="scope">
                     <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
-                    <el-popconfirm
-                            class="ml-5"
-                            confirm-button-text='确认删除'
-                            cancel-button-text='我再想想'
-                            icon="el-icon-info"
-                            icon-color="red"
-                            title="您确定删除吗？"
-                            @confirm="handleDelete(scope.row.id)">
-                        <el-button type="danger" slot="reference">删除 <i class="el-icon-remove-outline"></i></el-button>
-                    </el-popconfirm>
+
 
                 </template>
             </el-table-column>
@@ -95,16 +72,10 @@
 
         <el-dialog title="用户信息" :visible.sync="dialogFormVisible" width="35%">
             <el-form  label-width="100px" size="small" :model="form" :rules="addFormRules" ref="ruleForm">
-              <el-form-item label="姓名" prop="name">
-                <el-select v-model="form.name" placeholder="居民姓名" @change="getOptionValue">
-                  <el-option v-for="(item, index) in residentSourceDic"
-                             :key="index"
-                             :value="item.value"
-                             :label="item.label"
+                <el-form-item label="姓名" prop="name">
+                    <el-input type="text"  v-model="form.name"></el-input>
 
-                  ></el-option>
-                </el-select>
-              </el-form-item>
+                </el-form-item>
                 <el-form-item label="性别" prop="sex">
                     <el-radio-group v-model="form.sex">
                         <el-radio label="男" value="男"></el-radio>
@@ -136,10 +107,10 @@
 </template>
 
 <script>
-    import request from "../utils/request.js";
+    import request from "../../utils/request";
 
     export default {
-        name: "ResidentTravel",
+        name: "travelInfo",
         data(){
             //验证年龄
             let checkAge = (rule, value, callback) => {
@@ -150,6 +121,7 @@
                 }
             };
             return{
+                resident_name:localStorage.getItem('resident_name'),
 
                 //用户数据
                 tableData:[],
@@ -165,7 +137,7 @@
                 form:{},
                 //批量删除属性
                 multipleSelection:[],
-              residentSourceDic:[],
+                residentSourceDic:[],
 
                 addFormRules:{
                     name:[
@@ -201,22 +173,10 @@
             // this.total=res.total
             //请求数据
         },
-        methods:{
-            //导出按钮
-            exp(){
-                window.open("http://localhost:9090/user/export")
-            },
-            //导入成功钩子
-            handleImportSuccess(){
-                this.$message.success("导入成功!")
-                this.load()
-            },
-            //导入失败钩子
-            handleImportError(){
-                this.$message.error("导入失败,请检查导入文件格式并重新尝试!")
-                this.load()
-            },
+        mounted() {
 
+        },
+        methods:{
 
             //批量删除按钮
             handleSelectionChange(val){
@@ -239,19 +199,6 @@
             },
 
 
-            //用户删除按钮
-            handleDelete(id){
-                request.delete("/user/"+ id).then(res =>{
-                    //判断是否保存成功
-                    if(res) {
-                        this.$message.success("删除成功!")
-                        this.dialogFormVisible=false
-                        this.load()
-                    }else{
-                        this.$message.error("删除id失败!")
-                    }
-                })
-            },
 
             //用户编辑按钮
             handleEdit(row){
@@ -271,8 +218,8 @@
                 this.$refs['ruleForm'].validate(valid=>{
                     console.log('表单校验',valid)
                     if(valid){
-                        console.log('表单合法！')
-                        request.post("/travel",this.form).then(res =>{
+                        console.log('表单合法！',this.form)
+                        request.post("/travel/saveTravelForUsers",this.form).then(res =>{
                             //判断是否保存成功
                             console.log('post后端')
                             if(res) {
@@ -306,83 +253,82 @@
 
             //重置按钮
             reset(){
-                    this.name ="",
+                this.name ="",
                     this.destination = "",
                     this.totalman = "",
                     this.load()
             },
 
-          //加载用户信息
-          load(){
-            //如果模糊查询框值有一个不为空，则只执行模糊查询
-            if (this.name == ""&&this.destination==""&&this.totalman==""){
-              this.request.get("/travel/localTravel",{
-                params:{
-                  pageNum:this.pageNum,
-                  pageSize:this.pageSize,
-                }
-              }).then(res =>{
-                // console.log('residentres',res)
-                this.tableData=res.records;
-                this.total = res.total
-                console.log('res.records-local',res)
+            //加载用户信息
+            load(){
+                //如果模糊查询框值有一个不为空，则只执行模糊查询
+                if (this.name == ""&&this.destination==""&&this.totalman==""){
+                    this.request.get("/travel/localTravel",{
+                        params:{
+                            pageNum:this.pageNum,
+                            pageSize:this.pageSize,
+                        }
+                    }).then(res =>{
+                        // console.log('residentres',res)
+                        this.tableData=res.records;
+                        this.total = res.total
+                        console.log('res.records-local',res)
 
-              })
-            }else {
-              //执行模糊查询
-              this.request.get("/travel/localTravelPage",{
-                    params:{
-                      pageNum:this.pageNum,
-                      pageSize:this.pageSize,
-                      name:this.name,
-                      destination:this.destination,
-                      totalman:this.totalman
-                    }
-                  }
-              ).then(res =>{
-                // console.log('residentres',res)
-                this.tableData=res.records;
-                this.total = res.total
-                console.log('res.records-resident',res)
-
-              })
-            }
-
-            request.get("/resident/local",{
-              params:{
-                pageNum:this.pageNum,
-                pageSize:this.pageSize,
-
-              }
-            })
-                .then(res =>{
-                  // this.tableData1 = res
-                  console.log('res',res.records)
-
-                  for (let result of res.records){
-                    // console.log('table',table.name)
-                    console.log('res',res.records)
-                    this.residentSourceDic.push({
-                      value:result.id,
-                      label:result.name
                     })
-                  }
+                }else {
+                    //执行模糊查询
+                    this.request.get("/travel/localTravelPage",{
+                            params:{
+                                pageNum:this.pageNum,
+                                pageSize:this.pageSize,
+                                name:this.name,
+                                destination:this.destination,
+                                totalman:this.totalman
+                            }
+                        }
+                    ).then(res =>{
+                        // console.log('residentres',res)
+                        this.tableData=res.records;
+                        this.total = res.total
+                        console.log('res.records-resident',res)
+
+                    })
+                }
+
+                request.get("/resident/local",{
+                    params:{
+                        pageNum:this.pageNum,
+                        pageSize:this.pageSize,
+
+                    }
                 })
-          },
+                    .then(res =>{
+                        // this.tableData1 = res
+                        console.log('res',res.records)
 
-          getOptionValue(v){
-            console.log('当前下拉框的值',v)
-            request.get("/resident/getResident/"+v)
-                .then(res =>{
+                        for (let result of res.records){
+                            // console.log('table',table.name)
+                            console.log('res',res.records)
+                            this.residentSourceDic.push({
+                                value:result.id,
+                                label:result.name
+                            })
+                        }
+                    })
+            },
 
-                  console.log('下拉框返回的resident',res)
-                    const optionData = {name:res.name,sex:res.sex,age:res.age}
-                  this.form = optionData
-                  console.log('下拉框返回的resident',this.form)
-
-                })
-
-          }
+            // getOptionValue(v){
+            //     console.log('当前下拉框的值',v)
+            //     request.get("/resident/getResident/"+v)
+            //         .then(res =>{
+            //
+            //             console.log('下拉框返回的resident',res)
+            //             this.form = res
+            //             console.log('下拉框返回的resident',this.form)
+            //
+            //         })
+            //
+            // }
 
         }
     }

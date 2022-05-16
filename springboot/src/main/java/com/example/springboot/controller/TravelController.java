@@ -34,11 +34,18 @@ public class TravelController {
      */
     @PostMapping
     private boolean save(@RequestBody Travel travel) {
+        System.out.println("travel"+travel.getId());
         if (travel.getId()==0){
             return travelService.save(travel);
         }else {
             return travelService.updateById(travel);
         }
+    }
+    @PostMapping("/saveTravelForUsers")
+    private boolean saveTravelForUsers(@RequestBody Travel travel) {
+        System.out.println("travel"+travel.getId());
+
+        return travelService.save(travel);
     }
 
     /**
