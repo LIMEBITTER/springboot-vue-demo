@@ -45,6 +45,21 @@ public class HealthServiceImpl extends ServiceImpl<HealthMapper, Health> impleme
         return healthMapper.getHealthDto(wrapper,page);
     }
 
+    @Override
+    public boolean save2(HealthDto healthDto) {
+        return healthMapper.save2(healthDto);
+    }
+
+    @Override
+    public boolean updateHealthId(int id,int rid) {
+        return healthMapper.updateHealthId(id,rid);
+    }
+
+    @Override
+    public boolean changeHStatus(Integer id) {
+        return healthMapper.changeHStatus(id);
+    }
+
 //    @Override
 //    public boolean save1(Health health) {
 //        return healthMapper.saveHealth(health);

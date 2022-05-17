@@ -34,7 +34,7 @@ public class HealthController {
      * 查询健康信息 并 分页
      * @return
      */
-    @GetMapping("getAllHealth")
+    @GetMapping("/getAllHealth")
     public IPage<HealthDto> findAll(@RequestParam Integer pageNum,
                                    @RequestParam Integer pageSize) {
         Page<HealthDto> page = new Page<>(pageNum, pageSize);//创建分页page
@@ -54,6 +54,33 @@ public class HealthController {
         }else {
             return healthService.updateById(health);
         }
+    }
+
+    /**
+     * 新增用户健康（user）
+     * @param health
+     * @return
+     */
+    @PostMapping("/save2")
+    private boolean save2(@RequestBody HealthDto healthDto) {
+        healthService.save2(healthDto);
+        System.out.println("health插入数据的health——id"+healthDto.getId());
+        System.out.println("===="+healthDto.getRid());
+
+        return healthService.updateHealthId(healthDto.getId(),healthDto.getRid());
+
+    }
+
+    /**修改health_status
+     *
+     * @param id
+     * @return Resident
+     */
+    @GetMapping("/changeHStatus")
+    private boolean changeHStatus(@RequestParam Integer id) {
+        System.out.println("修改resident_status============="+healthService.changeHStatus(id));
+
+        return healthService.changeHStatus(id);
     }
 
     /**

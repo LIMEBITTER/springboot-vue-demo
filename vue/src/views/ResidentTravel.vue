@@ -73,6 +73,9 @@
                         <el-button type="danger" slot="reference">删除 <i class="el-icon-remove-outline"></i></el-button>
                     </el-popconfirm>
 
+                    <el-button type="success" v-if="scope.row.travelStatus===0" @click="changeStatus(scope.row.id)">审核 <i class="el-icon-edit"></i></el-button>
+
+
                 </template>
             </el-table-column>
 
@@ -325,7 +328,7 @@
                 // console.log('residentres',res)
                 this.tableData=res.records;
                 this.total = res.total
-                console.log('res.records-local',res)
+                console.log('res.records-local',res.records)
 
               })
             }else {
@@ -348,26 +351,26 @@
               })
             }
 
-            request.get("/resident/local",{
-              params:{
-                pageNum:this.pageNum,
-                pageSize:this.pageSize,
-
-              }
-            })
-                .then(res =>{
-                  // this.tableData1 = res
-                  console.log('res',res.records)
-
-                  for (let result of res.records){
-                    // console.log('table',table.name)
-                    console.log('res',res.records)
-                    this.residentSourceDic.push({
-                      value:result.id,
-                      label:result.name
-                    })
-                  }
-                })
+            // request.get("/resident/local",{
+            //   params:{
+            //     pageNum:this.pageNum,
+            //     pageSize:this.pageSize,
+            //
+            //   }
+            // })
+            //     .then(res =>{
+            //       // this.tableData1 = res
+            //       console.log('res',res.records)
+            //
+            //       for (let result of res.records){
+            //         // console.log('table',table.name)
+            //         console.log('res',res.records)
+            //         this.residentSourceDic.push({
+            //           value:result.id,
+            //           label:result.name
+            //         })
+            //       }
+            //     })
           },
 
           getOptionValue(v){
@@ -382,7 +385,16 @@
 
                 })
 
-          }
+          },
+            changeStatus(currentRowId){
+                request.get('/travel/changeTStatus',{params:{id:currentRowId}}).then(res=>{
+                    if (res){
+                        this.$message.success('审核成功！')
+                        this.load()
+                    }
+
+                })
+            }
 
         }
     }

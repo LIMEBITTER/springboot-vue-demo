@@ -7,11 +7,11 @@ import lombok.Data;
  * 健康页面返回的对象
  */
 @Data
-public class HealthDto extends Health {
+public class HealthDto {
     /**
      * 居民id
      */
-    private int id;
+//    private int id;
 
     /**
      * 姓名
@@ -31,5 +31,27 @@ public class HealthDto extends Health {
      * 性别
      */
     private String sex;
+//    private int rid;
+    /**
+     * 健康号
+     */
+    private int id;
+
+    /**
+     * 健康状态
+     */
+    private String normal;
+
+    /**
+     * 体温
+     */
+    private double temperature;
+
+    /**
+     * 疫苗接种情况
+     */
+    private String vaccines;
+
+    private int rid;
 
 }

@@ -50,12 +50,27 @@ public class TravelController {
      * @return
      */
     @PostMapping("/save2")
-    private boolean save2(@RequestBody Travel travel) {
-//        System.out.println("出行记录增加======="+travel.getId());
+    private boolean save2(@RequestBody TravelDto travel) {
+        System.out.println("出行记录增加======="+travel.getId());
         travelService.save2(travel);
         System.out.println("获取插入后的id========="+travel.getId());
+//        travelService.select
 
         return travelService.saveResidentTravel(travel);
+    }
+
+
+
+    /**修改travel_status
+     *
+     * @param id
+     * @return Resident
+     */
+    @GetMapping("/changeTStatus")
+    private boolean changeRStatus(@RequestParam Integer id) {
+        System.out.println("修改travel_status============="+travelService.changeTStatus(id));
+
+        return travelService.changeTStatus(id);
     }
 
 

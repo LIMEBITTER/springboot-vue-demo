@@ -2,6 +2,7 @@ package com.example.springboot.entity;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Travel {
     /**
      * 出行工具
      */
+
     private String travel_tool;
 
     /**
@@ -37,6 +39,7 @@ public class Travel {
     /**
      * 居民id
      */
+    @TableField(exist = false)
     private int rid;
 
 }

@@ -31,7 +31,9 @@ public interface TravelService extends IService<Travel> {
     public IPage<TravelDto> getNonTravelDto(Wrapper<TravelDto> wrapper,IPage page);
 
 
-    int save2(Travel travel);
+    int save2(TravelDto travel);
 
-    boolean saveResidentTravel(Travel travel);
+    boolean saveResidentTravel(TravelDto travel);
+
+    boolean changeTStatus(Integer id);
 }

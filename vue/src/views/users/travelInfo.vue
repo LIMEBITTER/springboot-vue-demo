@@ -8,8 +8,8 @@
 
         <div v-show="active===1">
             <el-form  label-width="100px" size="small" :model="form" :rules="addFormRules" ref="ruleForm" class="myForm">
-                <el-form-item label="出行工具" prop="travel_tool">
-                    <el-input v-model="form.travel_tool" autocomplete="off"></el-input>
+                <el-form-item label="出行工具" prop="travelTool">
+                    <el-input v-model="form.travelTool" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="目的地" prop="destination">
                     <el-input v-model="form.destination" autocomplete="off"></el-input>
@@ -88,7 +88,7 @@
             let userInfo = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
             this.form.uid = userInfo.id
             console.log('created==========',userInfo.id)
-            this.getResidentInfo()
+            this.getRidByUid()
         },
         methods:{
             // 步骤条下一步的方法
@@ -111,10 +111,10 @@
                             console.log('post后端')
                             if(res) {
                                 console.log('post后端返回值',res)
-                                this.$message.success("保存成功!")
+                                this.$message.success("提交成功，请等待审核！")
                                 this.next()
                             }else{
-                                this.$message.error("保存失败!")
+                                this.$message.error("提交失败!")
                             }
                         })
                     }else{
@@ -128,7 +128,7 @@
 
             },
 
-            getResidentInfo(){
+            getRidByUid(){
                 request.get('/resident/selectResidentStatus',{params:{id:this.form.uid}}).then(res=>{
                     console.log('出行填报',this.id)
                     // this.form=res
@@ -146,6 +146,7 @@
                     // }
                 })
             },
+
 
         }
     }

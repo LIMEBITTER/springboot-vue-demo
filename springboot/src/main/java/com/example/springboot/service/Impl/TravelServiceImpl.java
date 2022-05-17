@@ -52,13 +52,18 @@ public class TravelServiceImpl extends ServiceImpl<TravelMapper, Travel> impleme
     }
 
     @Override
-    public int save2(Travel travel) {
+    public int save2(TravelDto travel) {
         return travelMapper.save2(travel);
     }
 
     @Override
-    public boolean saveResidentTravel(Travel travel) {
+    public boolean saveResidentTravel(TravelDto travel) {
         return travelMapper.saveResidentTravel(travel);
+    }
+
+    @Override
+    public boolean changeTStatus(Integer id) {
+        return travelMapper.changeTStatus(id);
     }
 
 //    @Override

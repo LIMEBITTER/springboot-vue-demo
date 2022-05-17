@@ -22,24 +22,28 @@ public interface TravelMapper extends BaseMapper<Travel> {
                     "FROM travel t,resident r")
     List<TravelDto> getAllTravelInfo();
 //    @Select("SELECT * FROM travel v,resident r where v.id=r.id and local_people='是'")
-    @Select("select r.id,r.name,r.sex,r.age,t.travel_tool,t.destination,t.totalman from resident_travel rt inner join resident r on rt.rid=r.id inner join travel t on rt.traval_id=t.id where local_people = '是'")
+    @Select("select t.id,r.id,r.name,r.sex,r.age,t.travelTool,t.destination,t.totalman ,t.travelStatus from resident_travel rt inner join resident r on rt.rid=r.id inner join travel t on rt.traval_id=t.id where local_people = '是'")
     IPage<TravelDto> getAllLocalTravelInfo(Page page);
 
-    @Select("select r.name,r.sex,r.age,t.travel_tool,t.destination,t.totalman from resident_travel rt inner join resident r on rt.rid=r.id inner join travel t on rt.traval_id=t.id where local_people = '否'")
+    @Select("select t.id,r.id,r.name,r.sex,r.age,t.travelTool,t.destination,t.totalman ,t.travelStatus from resident_travel rt inner join resident r on rt.rid=r.id inner join travel t on rt.traval_id=t.id where local_people = '否'")
     IPage<TravelDto> getAllNonTravelInfo(Page page);
 
 //    @Select("SELECT * FROM travel v,resident r where v.id=r.id and local_people='是'${ew.customSqlSegment} ")
     @Select("SELECT * FROM travel v,resident r ${ew.customSqlSegment} and v.id=r.id")
-
     IPage<TravelDto> getTravelDto(@Param(Constants.WRAPPER) Wrapper<TravelDto> wrapper,IPage page);
 
     @Select("SELECT * FROM travel v,resident r ${ew.customSqlSegment} and v.id=r.id  ")
     IPage<TravelDto> getNonTravelDto(@Param(Constants.WRAPPER) Wrapper<TravelDto> wrapper,IPage page);
 
-    @Insert("INSERT into travel(id,travel_tool,destination,totalman) VALUES(#{id},#{travel_tool},#{destination},#{totalman})")
+    @Insert("INSERT into travel(id,travelTool,destination,totalman,travelStatus) VALUES(#{id},#{travelTool},#{destination},#{totalman},0)")
     @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
-    int save2(Travel travel);
+    int save2(TravelDto travel);
 
     @Insert("INSERT into resident_travel(rid,traval_id) VALUES(#{rid},#{id})")
-    boolean saveResidentTravel(Travel travel);
+    boolean saveResidentTravel(TravelDto travel);
+
+    @Update("update travel set travelStatus = 1 where id = #{id}")
+    boolean changeTStatus(Integer id);
+
+
 }

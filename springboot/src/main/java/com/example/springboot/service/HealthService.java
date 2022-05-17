@@ -31,5 +31,11 @@ public interface HealthService extends IService<Health> {
      */
     IPage<HealthDto> getAllHealthDto(Wrapper<HealthDto> wrapper,IPage page);
 
+    boolean save2(HealthDto healthDto);
+
+    boolean updateHealthId(int id,int rid);
+
+    boolean changeHStatus(Integer id);
+
 //    boolean save1(Health health);
 }
