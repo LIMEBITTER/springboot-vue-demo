@@ -22,7 +22,7 @@ public class Travel {
     /**
      * 出行工具
      */
-    private String travelTool;
+    private String travel_tool;
 
     /**
      * 目的地
@@ -33,5 +33,10 @@ public class Travel {
      * 出行总人数
      */
     private int totalman;
+
+    /**
+     * 居民id
+     */
+    private int rid;
 
 }

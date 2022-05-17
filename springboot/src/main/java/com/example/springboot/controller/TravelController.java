@@ -28,7 +28,7 @@ public class TravelController {
     @Autowired
     private TravelService travelService;
     /**
-     * 新增或者删除
+     * 新增或者删除  管理员
      * @param travel
      * @return
      */
@@ -41,9 +41,27 @@ public class TravelController {
             return travelService.updateById(travel);
         }
     }
+
+
+
+    /**
+     * 新增  用户
+     * @param travel
+     * @return
+     */
+    @PostMapping("/save2")
+    private boolean save2(@RequestBody Travel travel) {
+//        System.out.println("出行记录增加======="+travel.getId());
+        travelService.save2(travel);
+        System.out.println("获取插入后的id========="+travel.getId());
+
+        return travelService.saveResidentTravel(travel);
+    }
+
+
     @PostMapping("/saveTravelForUsers")
     private boolean saveTravelForUsers(@RequestBody Travel travel) {
-        System.out.println("travel"+travel.getId());
+//        System.out.println("出行记录增加======="+travel.getId());
 
         return travelService.save(travel);
     }

@@ -72,7 +72,7 @@ public class ResidentServiceImpl extends ServiceImpl<ResidentMapper, Resident> i
     }
 
     @Override
-    public Integer selectResidentStatus(Integer id) {
+    public Resident selectResidentStatus(Integer id) {
         return residentMapper.selectResidentStatus(id);
     }
 

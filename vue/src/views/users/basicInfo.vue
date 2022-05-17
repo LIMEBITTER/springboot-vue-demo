@@ -167,13 +167,13 @@
                     // this.form=res
                     console.log('基本信息填报',res)
                     // 0未提交
-                    if (res===0){
+                    if (res.residentStatus===0){
                      this.active=1
                         // 1提交了，但在审核
-                    }else if (res===1){
+                    }else if (res.residentStatus===1){
                         this.active=2
                         //2 审核成功
-                    }else if(res===2){
+                    }else if(res.residentStatus===2){
                         this.active=3
                     }
                 })

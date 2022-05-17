@@ -49,7 +49,7 @@ public class ResidentController {
      * @return Resident
      */
     @GetMapping("/selectResidentStatus")
-    private Integer selectResidentStatus(@RequestParam Integer id) {
+    private Resident selectResidentStatus(@RequestParam Integer id) {
         System.out.println("查询用户提交状态============="+residentService.selectResidentStatus(id));
 
         return residentService.selectResidentStatus(id);

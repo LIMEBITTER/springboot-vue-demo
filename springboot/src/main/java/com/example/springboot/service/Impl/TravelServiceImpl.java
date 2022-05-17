@@ -51,6 +51,16 @@ public class TravelServiceImpl extends ServiceImpl<TravelMapper, Travel> impleme
         return travelMapper.getNonTravelDto(wrapper,page);
     }
 
+    @Override
+    public int save2(Travel travel) {
+        return travelMapper.save2(travel);
+    }
+
+    @Override
+    public boolean saveResidentTravel(Travel travel) {
+        return travelMapper.saveResidentTravel(travel);
+    }
+
 //    @Override
 //    public IPage<TravelDto> getNonTravelDto(Wrapper<TravelDto> wrapper, Page page) {
 //        return travelMapper.getNonTravelDto(wrapper,page);

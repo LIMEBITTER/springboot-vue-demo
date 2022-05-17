@@ -55,6 +55,6 @@ public interface ResidentMapper extends BaseMapper<Resident> {
     @Update("update resident set resident_status = 2 where id = #{id}")
     boolean changeRStatus(Integer id);
 
-    @Select("SELECT resident_status from resident where id = (select rid from user where id = #{id})")
-    Integer selectResidentStatus(Integer id);
+    @Select("SELECT * from resident where id = (select rid from user where id = #{id})")
+    Resident selectResidentStatus(Integer id);
 }
