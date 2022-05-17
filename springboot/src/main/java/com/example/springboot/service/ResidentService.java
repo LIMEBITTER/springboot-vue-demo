@@ -33,5 +33,7 @@ public interface ResidentService extends IService<Resident> {
     Resident bindUserResident(Integer id);
 
     boolean changeRStatus(Integer id);
+
+    Integer selectResidentStatus(Integer id);
 //    IPage<Resident> selectNonLocalPeople(Wrapper<Resident> wrapper, Page page);
 }

@@ -55,12 +55,12 @@
             </el-table-column>
             <el-table-column prop="localPeople" label="是否为本小区人员" width="120">
             </el-table-column>
-            <el-table-column prop="residentStatus" label="是否为本小区人员" width="120">
-            </el-table-column>
+<!--            <el-table-column prop="residentStatus" label="审核状态" width="120">-->
+<!--            </el-table-column>-->
             <el-table-column label="操作"  width="200" align="center">
                 <template slot-scope="scope">
                     <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
-                    <el-button type="success" v-if="scope.row.residentStatus===0" @click="changeStatus(scope.row.id)">审核 <i class="el-icon-edit"></i></el-button>
+                    <el-button type="success" v-if="scope.row.residentStatus===1" @click="changeStatus(scope.row.id)">审核 <i class="el-icon-edit"></i></el-button>
 
                     <el-popconfirm
                             class="ml-5"
@@ -358,6 +358,7 @@
                 request.get('/resident/changeRStatus',{params:{id:currentRowId}}).then(res=>{
                     if (res){
                         this.$message.success('审核成功！')
+                        this.load()
                     }
 
                 })

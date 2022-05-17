@@ -43,6 +43,18 @@ public class ResidentController {
         return residentService.bindUserResident(id);
     }
 
+    /**查询用户提交状态
+     * user与resident绑定
+     * @param id
+     * @return Resident
+     */
+    @GetMapping("/selectResidentStatus")
+    private Integer selectResidentStatus(@RequestParam Integer id) {
+        System.out.println("查询用户提交状态============="+residentService.selectResidentStatus(id));
+
+        return residentService.selectResidentStatus(id);
+    }
+
     /**修改resident_status
      *
      * @param id

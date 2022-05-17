@@ -77,7 +77,7 @@
                 }
             }
             return{
-                active:parseInt(localStorage.getItem('active')),
+                active:1,
                 name: "",
                 address: "",
                 //嵌套表单
@@ -121,6 +121,7 @@
             let userInfo = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
             this.form.uid = userInfo.id
             console.log('created==========',userInfo.id)
+            this.getResidentInfo()
         },
         methods:{
             // 步骤条下一步的方法
@@ -158,6 +159,24 @@
                     }
                 })
 
+            },
+
+            getResidentInfo(){
+                request.get('/resident/selectResidentStatus',{params:{id:this.form.uid}}).then(res=>{
+                    console.log('基本信息填报',this.id)
+                    // this.form=res
+                    console.log('基本信息填报',res)
+                    // 0未提交
+                    if (res===0){
+                     this.active=1
+                        // 1提交了，但在审核
+                    }else if (res===1){
+                        this.active=2
+                        //2 审核成功
+                    }else if(res===2){
+                        this.active=3
+                    }
+                })
             },
 
         }

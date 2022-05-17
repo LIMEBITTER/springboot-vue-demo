@@ -48,6 +48,11 @@ public class ResidentDto {
      */
     private String local_people;
 
+    /**
+     * 审核状态
+     */
+    private int resident_status;
+
 
 
 

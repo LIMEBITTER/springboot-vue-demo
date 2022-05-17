@@ -42,16 +42,19 @@ public interface ResidentMapper extends BaseMapper<Resident> {
 
     List<Resident> getAllPerson();
 
-    @Insert("insert into resident(id,name,sex,age,address,tel,local_people) VALUES(#{id},#{name},#{sex},#{age},#{address},#{tel},#{local_people})")
+    @Insert("insert into resident(id,name,sex,age,address,tel,local_people,resident_status) VALUES(#{id},#{name},#{sex},#{age},#{address},#{tel},#{local_people},1)")
     @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
     int save2(ResidentDto residentDto);
 
     @Update("update user set rid=#{id} where id = #{uid}")
     boolean updateUserRId(ResidentDto residentDto);
 
-    @Select("SELECT * from resident where id = (select rid from user where id = #{id}) and resident_status=1")
+    @Select("SELECT * from resident where id = (select rid from user where id = #{id}) and resident_status=2")
     Resident bindUserResident(Integer id);
 
-    @Update("update resident set resident_status = 1 where id = #{id}")
+    @Update("update resident set resident_status = 2 where id = #{id}")
     boolean changeRStatus(Integer id);
+
+    @Select("SELECT resident_status from resident where id = (select rid from user where id = #{id})")
+    Integer selectResidentStatus(Integer id);
 }
