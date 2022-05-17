@@ -56,6 +56,11 @@ public class Resident {
      */
     private int healthId;
 
+    /**
+     * 审核状态
+     */
+    private int residentStatus;
+
 
 
 }

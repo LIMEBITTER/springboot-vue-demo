@@ -12,37 +12,40 @@
 <!--        <i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
 <!--      </el-upload>-->
 
-      <el-form-item label="用户名">
-        <el-input disabled v-model="form.username" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="昵称">
-        <el-input disabled v-model="form.nickName" autocomplete="off"></el-input>
-      </el-form-item>
-<!--      <el-form-item label="邮箱">-->
-<!--        <el-input v-model="form.email" autocomplete="off"></el-input>-->
+<!--      <el-form-item label="用户名">-->
+<!--        <el-input disabled v-model="form.username" autocomplete="off"></el-input>-->
 <!--      </el-form-item>-->
-<!--      <el-form-item label="电话">-->
-<!--        <el-input v-model="form.phone" autocomplete="off"></el-input>-->
-<!--      </el-form-item>-->
-      <el-form-item label="地址">
-        <el-input disabled type="textarea" v-model="form.address" autocomplete="off"></el-input>
+      <el-form-item label="姓名">
+        <el-input disabled v-model="form.name" autocomplete="off"></el-input>
       </el-form-item>
-<!--      <el-form-item>-->
-<!--        <el-button type="primary" @click="save">确 定</el-button>-->
-<!--      </el-form-item>-->
+        <el-form-item label="性别">
+            <el-input disabled v-model="form.sex" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="年龄">
+            <el-input disabled v-model="form.age" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="地址">
+            <el-input type="textarea" disabled v-model="form.address" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="是否为本地居民">
+            <el-input disabled v-model="form.localPeople" autocomplete="off"></el-input>
+        </el-form-item>
+
     </el-form>
   </el-card>
 </template>
 
 <script>
 import {serverIp} from "../../public/config";
+import request from "../utils/request";
 
 export default {
   name: "Person",
   data() {
     return {
       serverIp: serverIp,
-      form: null,
+      form: {},
+        id:null,
       user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
     }
   },
@@ -53,12 +56,16 @@ export default {
       console.log('person',res)
       this.form = res
     })
+      let userInfo = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+      this.id = userInfo.id
   },
+
   mounted(){
     this.form = this.user
 
     console.log('formuser',this.form)
     console.log('user1',JSON.stringify(this.user))
+      this.getResidentInfo()
 
   },
   methods: {
@@ -83,6 +90,14 @@ export default {
           this.$message.error("保存失败")
         }
       })
+    },
+
+    getResidentInfo(){
+        request.get('/resident/bindUserResident',{params:{id:this.id}}).then(res=>{
+            console.log('用户信息绑定',this.id)
+            this.form=res
+            console.log(res)
+        })
     },
     handleAvatarSuccess(res) {
       this.form.avatarUrl = res

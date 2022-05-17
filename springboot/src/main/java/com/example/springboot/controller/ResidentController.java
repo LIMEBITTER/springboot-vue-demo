@@ -31,6 +31,31 @@ public class ResidentController {
     @Autowired
     private ResidentService residentService;
 
+    /**查询用户信息绑定
+     * user与resident绑定
+     * @param id
+     * @return Resident
+     */
+    @GetMapping("/bindUserResident")
+    private Resident bindUserResident(@RequestParam Integer id) {
+        System.out.println("查询用户信息绑定============="+residentService.bindUserResident(id));
+
+        return residentService.bindUserResident(id);
+    }
+
+    /**修改resident_status
+     *
+     * @param id
+     * @return Resident
+     */
+    @GetMapping("/changeRStatus")
+    private boolean changeRStatus(@RequestParam Integer id) {
+        System.out.println("修改resident_status============="+residentService.changeRStatus(id));
+
+        return residentService.changeRStatus(id);
+    }
+
+
 
     /**
      * 查询所有本小区人员信息 并 分页

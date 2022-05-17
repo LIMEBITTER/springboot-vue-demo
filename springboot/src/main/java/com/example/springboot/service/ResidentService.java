@@ -29,5 +29,9 @@ public interface ResidentService extends IService<Resident> {
     int save2(ResidentDto residentDto);
 
     boolean updateUserRId(ResidentDto residentDto);
+
+    Resident bindUserResident(Integer id);
+
+    boolean changeRStatus(Integer id);
 //    IPage<Resident> selectNonLocalPeople(Wrapper<Resident> wrapper, Page page);
 }
