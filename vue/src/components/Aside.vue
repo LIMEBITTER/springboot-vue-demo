@@ -93,6 +93,10 @@
                     <i class="el-icon-s-custom"></i>
                     <span slot="title">健康申报</span>
                 </el-menu-item>
+            <el-menu-item index="/users/VolunteerInfo">
+                <i class="el-icon-s-custom"></i>
+                <span slot="title">志愿者申报</span>
+            </el-menu-item>
             </el-submenu>
 
 

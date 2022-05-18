@@ -43,5 +43,15 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         return volunteerMapper.getVolunteerDto(wrapper,page);
     }
 
+    @Override
+    public int save2(VolunteerDto volunteerDto) {
+        return volunteerMapper.save2(volunteerDto);
+    }
+
+    @Override
+    public boolean updateUserVId(int id, int rid) {
+        return volunteerMapper.updateUserVId(id,rid);
+    }
+
 
 }

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import com.example.springboot.controller.dto.ResidentDto;
 import com.example.springboot.controller.dto.VolunteerDto;
 import com.example.springboot.entity.Resident;
 import com.example.springboot.entity.Volunteer;
@@ -60,6 +61,22 @@ public class VolunteerController {
         }else {
             return volunteerService.updateById(volunteer);
         }
+    }
+
+
+    /**志愿者登记
+     * 新增或者删除
+     * @param volunteerDto
+     * @return
+     */
+    @PostMapping("/save2")
+    private boolean save2(@RequestBody VolunteerDto volunteerDto) {
+        int save2= volunteerService.save2(volunteerDto);
+        System.out.println("志愿者登记：获取插入后的id========="+volunteerDto.getId());
+        boolean flag = volunteerService.updateUserVId(volunteerDto.getId(),volunteerDto.getRid());
+
+
+        return flag;
     }
 
 

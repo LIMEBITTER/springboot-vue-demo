@@ -32,4 +32,7 @@ public interface VolunteerService extends IService<Volunteer> {
     IPage<VolunteerDto> getAllVolunteerDto(Wrapper<VolunteerDto> wrapper, IPage page);
 
 
+    int save2(VolunteerDto volunteerDto);
+
+    boolean updateUserVId(int id, int rid);
 }

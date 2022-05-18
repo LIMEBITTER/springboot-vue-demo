@@ -41,6 +41,8 @@ const routes = [
       {path: 'basicInfo', name: 'BasicInfo', component: ()=> import('../views/users/basicInfo.vue'), meta:{title:"基本信息填报",requireAuth: true}},
       {path: 'healthInfo', name: 'HealthInfo', component: ()=> import('../views/users/healthInfo.vue'), meta:{title:"健康申报",requireAuth: true}},
       {path: 'travelInfo', name: 'TravelInfo', component: ()=> import('../views/users/travelInfo.vue'), meta:{title:"出入申报",requireAuth: true}},
+      {path: 'volunteerInfo', name: 'VolunteerInfo', component: ()=> import('../views/users/volunteerInfo.vue'), meta:{title:"志愿者申报",requireAuth: true}},
+
 
     ]
   },

@@ -164,7 +164,7 @@ public class TravelController {
      * @param totalman
      * @return
      */
-    @GetMapping("/NonLocalTravelPage")
+    @GetMapping("/nonLocalTravelPage")
     public  IPage<TravelDto> findPage1(@RequestParam Integer pageNum,
                                       @RequestParam Integer pageSize,
                                       @RequestParam(defaultValue = "") String name,

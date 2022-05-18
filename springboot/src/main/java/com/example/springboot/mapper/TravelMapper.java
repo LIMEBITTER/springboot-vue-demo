@@ -29,10 +29,11 @@ public interface TravelMapper extends BaseMapper<Travel> {
     IPage<TravelDto> getAllNonTravelInfo(Page page);
 
 //    @Select("SELECT * FROM travel v,resident r where v.id=r.id and local_people='是'${ew.customSqlSegment} ")
-    @Select("SELECT * FROM travel v,resident r ${ew.customSqlSegment} and v.id=r.id")
+    @Select("SELECT * from resident_travel rt inner join resident r on rt.rid=r.id inner join travel t on rt.traval_id=t.id ${ew.customSqlSegment} and r.local_people='是'")
     IPage<TravelDto> getTravelDto(@Param(Constants.WRAPPER) Wrapper<TravelDto> wrapper,IPage page);
 
-    @Select("SELECT * FROM travel v,resident r ${ew.customSqlSegment} and v.id=r.id  ")
+//    @Select("SELECT * FROM travel v,resident r ${ew.customSqlSegment} and v.id=r.id  ")
+    @Select("SELECT * from resident_travel rt inner join resident r on rt.rid=r.id inner join travel t on rt.traval_id=t.id ${ew.customSqlSegment} and r.local_people='否'")
     IPage<TravelDto> getNonTravelDto(@Param(Constants.WRAPPER) Wrapper<TravelDto> wrapper,IPage page);
 
     @Insert("INSERT into travel(id,travelTool,destination,totalman,travelStatus) VALUES(#{id},#{travelTool},#{destination},#{totalman},0)")
