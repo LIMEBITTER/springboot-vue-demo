@@ -54,4 +54,15 @@ public class HealthDto {
 
     private int rid;
 
+    /**
+     * 统计当前体温的人数
+     */
+    private int countTempNum;
+
+    /**
+     * 统计当前隔离状态是的人数
+     *
+     */
+    private int countNormalNum;
+
 }

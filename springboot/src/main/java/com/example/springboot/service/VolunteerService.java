@@ -35,4 +35,6 @@ public interface VolunteerService extends IService<Volunteer> {
     int save2(VolunteerDto volunteerDto);
 
     boolean updateUserVId(int id, int rid);
+
+    List<VolunteerDto> getVolAddressChart();
 }

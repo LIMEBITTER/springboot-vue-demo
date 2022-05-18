@@ -57,4 +57,7 @@ public interface ResidentMapper extends BaseMapper<Resident> {
 
     @Select("SELECT * from resident where id = (select rid from user where id = #{id})")
     Resident selectResidentStatus(Integer id);
+
+    @Select("SELECT local_people,count(local_people) as countTypeOfPeople from resident GROUP BY local_people")
+    List<ResidentDto> getTypeOfPeople();
 }

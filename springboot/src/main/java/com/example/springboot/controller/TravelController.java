@@ -66,11 +66,11 @@ public class TravelController {
      * @param id
      * @return Resident
      */
-    @GetMapping("/changeTStatus")
+    @GetMapping("/changeSTtatus")
     private boolean changeRStatus(@RequestParam Integer id) {
-        System.out.println("修改travel_status============="+travelService.changeTStatus(id));
+//        System.out.println("修改travel_status============="+travelService.changeTStatus(id));
 
-        return travelService.changeTStatus(id);
+        return travelService.changeSTtatus(id);
     }
 
 
@@ -210,6 +210,40 @@ public class TravelController {
         out.close();
         writer.close();
     }
+
+
+    /**可视化
+     *出行工具的使用人数的饼图
+     *
+     * @return TravelDto
+     */
+    @GetMapping("/getTravelToolCount")
+    @ResponseBody
+    private List<TravelDto> getTravelToolCount() {
+//        System.out.println("出行记录增加======="+travel.getId());
+
+        System.out.println("getTravelToolCount===="+travelService.getTravelToolCount());
+
+        return travelService.getTravelToolCount();
+    }
+
+    /**
+     *根据travel id查询travel—status user
+     *
+     * @return Integer
+     */
+    @GetMapping("/selectTravelById")
+    private Integer selectTravelById(@RequestParam Integer rid) {
+//        System.out.println("出行记录增加======="+travel.getId());
+
+        System.out.println("getTravelToolCount===="+travelService.getTravelToolCount());
+
+        return travelService.selectTravelById(rid);
+    }
+
+
+
+
 
 }
 

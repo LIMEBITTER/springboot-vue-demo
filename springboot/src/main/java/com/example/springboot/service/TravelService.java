@@ -35,5 +35,10 @@ public interface TravelService extends IService<Travel> {
 
     boolean saveResidentTravel(TravelDto travel);
 
-    boolean changeTStatus(Integer id);
+    boolean changeSTtatus(Integer id);
+
+    List<TravelDto> getTravelToolCount();
+
+
+    Integer selectTravelById(Integer rid);
 }

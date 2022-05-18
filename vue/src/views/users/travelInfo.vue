@@ -87,7 +87,7 @@
             }
             let userInfo = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
             this.form.uid = userInfo.id
-            console.log('created==========',userInfo.id)
+            console.log('created==========',this.form.uid)
             this.getRidByUid()
         },
         methods:{
@@ -134,16 +134,22 @@
                     // this.form=res
                     this.form.rid = res.id
                     console.log('出行填报',res)
-                    // 0未提交
-                    // if (res===0){
-                    //     this.active=1
-                    //     // 1提交了，但在审核
-                    // }else if (res===1){
-                    //     this.active=2
-                    //     //2 审核成功
-                    // }else if(res===2){
-                    //     this.active=3
-                    // }
+
+                    request.get('/travel/selectTravelById',{params:{rid:this.form.rid}}).then(res=>{
+                        // 0未提交
+                        if (res===null){
+                            this.active=1
+                            // 1提交了，但在审核
+                        }else if (res===1){
+                            this.active=2
+                            //2 审核成功
+                        }else if(res===2){
+                            this.active=3
+                        }
+
+                    })
+
+
                 })
             },
 

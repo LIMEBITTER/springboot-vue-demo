@@ -150,6 +150,29 @@ public class HealthController {
         writer.close();
     }
 
+
+    /**可视化
+     * 体温人数的散点图
+     * @return
+     */
+    @GetMapping("/getTempCountChart")
+    @ResponseBody
+    public List<HealthDto> tempCountChart() {
+        return healthService.tempCountChart();
+    }
+
+    /**可视化
+     * 体温人数的散点图
+     * @return
+     */
+    @GetMapping("/getHealthSituation")
+    @ResponseBody
+    public List<HealthDto> getHealthSituation() {
+        return healthService.getHealthSituation();
+    }
+
+
+
 }
 
 

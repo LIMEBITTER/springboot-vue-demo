@@ -32,7 +32,7 @@
                     <div >隔离人数</div>
 
                     <div style="padding: 10px 0;text-align: center;font-weight: bold">
-                        2
+                        0
                     </div>
 
                 </el-card>
@@ -42,7 +42,7 @@
                     <div >正常人数</div>
 
                     <div style="padding: 10px 0;text-align: center;font-weight: bold">
-                        8
+                        {{this.normalTotal}}
                     </div>
 
                 </el-card>
@@ -52,12 +52,25 @@
         <!-- 折线图，饼图 -->
         <el-row>
             <el-col :span="12">
-                <div id="main" style="width: 500px; height: 400px"></div>
+                <div id="travelToolChart"></div>
 
             </el-col>
 
             <el-col :span="12">
-                <div id="pie" style="width: 500px; height: 400px"></div>
+                <div id="residentHealChart"></div>
+
+            </el-col>
+        </el-row>
+
+        <!-- 折线图，饼图 -->
+        <el-row>
+            <el-col :span="12">
+                <div id="tempCountChart"></div>
+
+            </el-col>
+
+            <el-col :span="12">
+                <div id="volAddressChart"></div>
 
             </el-col>
         </el-row>
@@ -69,9 +82,10 @@
 </template>
 
 <script>
-    import * as echarts from 'echarts'
     import ChinaMap from "../components/ChinaMap";
     import request from "../utils/request";
+    import {Pie,Scatter,Line} from '@antv/g2plot';
+
 
     export default {
         name: "Home",
@@ -79,110 +93,33 @@
             return{
                 residentTotal:0,
                 outsiderTotal:0,
-                normalTotal:0,
+                normalTotal:null,
 
                 pageNum:1,
-                pageSize:5,
+                pageSize:20,
                 name:"",
                 address:"",
             }
         },
         components:{ChinaMap},
         created(){
-          this.getData();
+            this.getData();
+            console.log('created======',this.residentTotal,this.outsiderTotal,this.normalTotal)
+
+
         },
         mounted() {//页面渲染完成之后触发
             //折线图
-            var color = ["#CC00FF","#FFC0CB","#FF69B4","#DDA0DD","#FF00FF","#9400D3","#8A2BE2"]
-            var option = {
-                title: {
-                    text: '小区疫情',
-                    subtext: 'Fake Data',
-                    left: 'center'
-                },
-                tooltip: {
-                    trigger: 'item'
-                },
-                legend: {
-                    orient: 'vertical',
-                    left: 'left'
-                },
-                xAxis: {
-                    type: 'category',
-                    data: ['小区居住人数', '非小区人数', '隔离人数', '正常人数']
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [
 
-                    {
-                        data: [6,4,2,8],
-                        type: 'bar',
-                        itemStyle: {
-                            color: function (params) {
-                                return color[params.dataIndex];
-                            }
-                        }
-                    },
-                ]
-            };
-            var chartDom = document.getElementById('main');
-            var myChart = echarts.init(chartDom);
-            myChart.setOption(option);
+            console.log('mounted======',this.residentTotal,this.outsiderTotal,this.normalTotal)
 
-            //饼图
-            var pieOption = {
-                title: {
-                    text: 'Referer of a Website',
-                    subtext: 'Fake Data',
-                    left: 'center'
-                },
-                tooltip: {
-                    trigger: 'item'
-                },
-                legend: {
-                    orient: 'vertical',
-                    left: 'left'
-                },
-                series: [
-                    {
-                        name: 'Access From',
-                        type: 'pie',
-                        radius: '60%',
+            this.travelToolChart()
+            this.residentHealChart()
+            this.tempCountChart()
+            this.volAddressChart()
 
-                        label:{            //饼图图形上的文本标签
-                            normal:{
-                                show:true,
-                                position:'inner', //标签的位置
-                                textStyle : {
-                                    fontWeight : 300 ,
-                                    fontSize : 14,    //文字的字体大小
-                                    color: "#fff"
-                                },
-                                formatter:'{d}%'
-                            }
-                        },
 
-                        data: [
-                            { value: 6, name: '小区居住人数' },
-                            { value: 4, name: '非小区人数' },
-                            { value: 2, name: '隔离人数' },
-                            { value: 8, name: '正常人数' },
-                        ],
-                        emphasis: {
-                            itemStyle: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
-                            }
-                        }
-                    }
-                ]
-            };
-            var pieDom = document.getElementById('pie');
-            var pieChart = echarts.init(pieDom)
-            pieChart.setOption(pieOption);
+
 
         },
         methods:{
@@ -195,11 +132,11 @@
                         }
                     }
                 ).then(res =>{
-                    this.residentTotal=res.total;
-                    console.log('home',res)
+                    this.residentTotal=res.records.length;
+                    console.log('local',this.residentTotal)
 
                 })
-
+                //
                 this.request.get("/resident/nonLocal",{
                         params:{
                             pageNum:this.pageNum,
@@ -209,13 +146,211 @@
                 ).then(res =>{
                     // console.log('residentres',res)
                     // this.tableData=res.records;
-                    this.outsiderTotal=res.total;
-                    console.log('home',res)
+                    this.outsiderTotal=res.records.length;
+                    console.log('outsiderTotal',this.outsiderTotal)
+
+                })
+                request.get('/health/getAllHealth',{
+                            params:{
+                                pageNum:this.pageNum,
+                                pageSize:this.pageSize,
+                            }
+                }).then(res=>{
+                    this.normalTotal=res.records.length
+                    console.log('normalTotal',this.normalTotal)
+
+                })
+            },
+
+            //2.出行工具的使用人数的环图
+            travelToolChart(){
+                request.get('/travel/getTravelToolCount').then(res=>{
+                    const data = res
+                    console.log('出行工具的使用人数的环图====数据',data)
+                    const piePlot = new Pie('travelToolChart', {
+                        appendPadding: 10,
+                        data,
+                        angleField: 'countNum',
+                        colorField: 'travelTool',
+                        radius: 1,
+                        innerRadius: 0.64,
+                        meta: {
+                            value: {
+                                formatter: (v) => `¥ ${v}`,
+                            },
+                        },
+                        label: {
+                            type: 'inner',
+                            offset: '-50%',
+                            autoRotate: false,
+                            style: { textAlign: 'center' },
+                            formatter: ({ percent }) => `${(percent * 100).toFixed(0)}%`,
+                        },
+                        statistic: {
+                            title: {
+                                offsetY: -8,
+                            },
+                            content: {
+                                offsetY: -4,
+                            },
+                        },
+                        // 添加 中心统计文本 交互
+                        interactions: [
+                            { type: 'element-selected' },
+                            { type: 'element-active' },
+                            {
+                                type: 'pie-statistic-active',
+                                cfg: {
+                                    start: [
+                                        { trigger: 'element:mouseenter', action: 'pie-statistic:change' },
+                                        { trigger: 'legend-item:mouseenter', action: 'pie-statistic:change' },
+                                    ],
+                                    end: [
+                                        { trigger: 'element:mouseleave', action: 'pie-statistic:reset' },
+                                        { trigger: 'legend-item:mouseleave', action: 'pie-statistic:reset' },
+                                    ],
+                                },
+                            },
+                        ],
+                    });
+
+                    piePlot.render();
+                })
+                // const data = [
+                //     { type: '分类一', value: 27 },
+                //     { type: '分类二', value: 25 },
+                //     { type: '分类三', value: 18 },
+                //     { type: '分类四', value: 15 },
+                //     { type: '分类五', value: 10 },
+                //     { type: '其他', value: 5 },
+                // ];
+
+
+
+            },
+
+            //小区人员与健康饼图
+            residentHealChart(){
+                var data1,data2;
+
+                const data = [
+                    { type: '分类一', value: 27 },
+                    { type: '分类二', value: 25 },
+                    { type: '分类三', value: 18 },
+                    { type: '分类四', value: 15 },
+                    { type: '分类五', value: 10 },
+                    { type: '其他', value: 5 },
+                ];
+
+                    request.get('/health/getHealthSituation').then(res=>{
+                        const data = res
+                        console.log('residentHealChart',data)
+                        const piePlot = new Pie('residentHealChart', {
+                            appendPadding: 10,
+                            data,
+                            angleField: 'countNormalNum',
+                            colorField: 'normal',
+                            radius: 0.9,
+                            label: {
+                                type: 'inner',
+                                offset: '-30%',
+                                content: ({ percent }) => `${(percent * 100).toFixed(0)}%`,
+                                style: {
+                                    fontSize: 14,
+                                    textAlign: 'center',
+                                },
+                            },
+                            interactions: [{ type: 'element-active' }],
+                        });
+
+                        piePlot.render();
 
                 })
 
-            }
 
+
+
+
+
+            },
+
+            //1.体温人数的散点图
+            tempCountChart(){
+                request.get('/health/getTempCountChart').then(res=>{
+                    const data = res
+                    const scatterPlot = new Scatter('tempCountChart', {
+                        data,
+                        xField: 'temperature',
+                        yField: 'countTempNum',
+                        size: 5,
+                        pointStyle: {
+                            stroke: '#777777',
+                            lineWidth: 1,
+                            fill: '#5B8FF9',
+                        },
+                        regressionLine: {
+                            type: 'quad', // linear, exp, loess, log, poly, pow, quad
+                        },
+                    });
+                    scatterPlot.render();
+
+                })
+                // const data = [
+                //     { x: 1, y: 4.181 },
+                //     { x: 2, y: 4.665 },
+                //     { x: 3, y: 5.296 },
+                //     { x: 4, y: 5.365 },
+                //     { x: 5, y: 5.448 },
+                //     { x: 6, y: 5.744 },
+                //     { x: 7, y: 5.653 },
+                //     { x: 8, y: 5.844 },
+                //     { x: 9, y: 6.362 },
+                //     { x: 10, y: 6.38 },
+                //     { x: 11, y: 6.311 },
+                //     { x: 12, y: 6.457 },
+                //     { x: 13, y: 6.479 },
+                //     { x: 14, y: 6.59 },
+                //     { x: 15, y: 6.74 },
+                //     { x: 16, y: 6.58 },
+                //     { x: 17, y: 6.852 },
+                //     { x: 18, y: 6.531 },
+                //     { x: 19, y: 6.682 },
+                //     { x: 20, y: 7.013 },
+                //     { x: 21, y: 6.82 },
+                //     { x: 22, y: 6.647 },
+                //     { x: 23, y: 6.951 },
+                //     { x: 24, y: 7.121 },
+                //     { x: 25, y: 7.143 },
+                //     { x: 26, y: 6.914 },
+                //     { x: 27, y: 6.941 },
+                //     { x: 28, y: 7.226 },
+                //     { x: 29, y: 6.898 },
+                //     { x: 30, y: 7.392 },
+                //     { x: 31, y: 6.938 },
+                // ];
+
+            },
+
+            //3.工作地点志愿者人数折线图
+            volAddressChart(){
+
+                request.get('/volunteer/getVolAddressChart').then(res=>{
+                    const data = res
+                    const line = new Line('volAddressChart', {
+                        data,
+                        padding: 'auto',
+                        xField: 'workAddress',
+                        yField: 'countAddressNum',
+                        xAxis: {
+                            // type: 'timeCat',
+                            tickCount: 5,
+                        },
+                        smooth: true,
+                    });
+
+                    line.render();
+                })
+            }
 
 
         }

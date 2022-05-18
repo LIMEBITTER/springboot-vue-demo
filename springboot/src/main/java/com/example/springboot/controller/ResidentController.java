@@ -1,6 +1,7 @@
 package com.example.springboot.controller;
 
 
+import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -15,9 +16,11 @@ import com.example.springboot.service.ResidentService;
 import com.example.springboot.service.VolunteerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -169,6 +172,21 @@ public class ResidentController {
         writer.close();
     }
 
+
+    /**
+     * 导入接口
+     */
+    @PostMapping("/import")
+    public Boolean imp(MultipartFile file) throws Exception{
+        InputStream inputStream = file.getInputStream();
+        ExcelReader reader = ExcelUtil.getReader(inputStream);
+//        List<User> userList = reader.read(0, 1, User.class);
+//        Bean方式读取
+        List<Resident> residentList = reader.readAll(Resident.class);
+        residentService.saveBatch(residentList);
+        return true;
+    }
+
     /**
      * 模糊查询
      */
@@ -220,6 +238,19 @@ public class ResidentController {
     public Resident GetResident(@PathVariable int id){
         return residentService.selectResidentById(id);
     }
+
+    /**可视化
+     * 查询居民种类人数
+     *
+     * @return
+     */
+    @GetMapping("/getTypeOfPeople")
+    @ResponseBody
+    public List<ResidentDto> getTypeOfPeople(){
+        return residentService.getTypeOfPeople();
+    }
+
+
 
 
 }

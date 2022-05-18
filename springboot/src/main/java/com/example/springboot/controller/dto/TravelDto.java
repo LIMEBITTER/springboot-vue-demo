@@ -38,6 +38,9 @@ public class TravelDto  {
      * 出行审核状态
      */
     private int travelStatus;
-
+    /**
+     * 统计出行工具使用人数
+     */
+    private int countNum;
 
 }

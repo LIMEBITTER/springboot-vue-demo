@@ -59,4 +59,9 @@ public class VolunteerDto  {
      *
      */
     private int rid;
+
+    /**
+     * 统计当前工作地点的人数
+     */
+    private int countAddressNum;
 }

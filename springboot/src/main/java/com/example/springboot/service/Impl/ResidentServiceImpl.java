@@ -76,6 +76,11 @@ public class ResidentServiceImpl extends ServiceImpl<ResidentMapper, Resident> i
         return residentMapper.selectResidentStatus(id);
     }
 
+    @Override
+    public List<ResidentDto> getTypeOfPeople() {
+        return residentMapper.getTypeOfPeople();
+    }
+
 //    @Override
 //    public IPage<Resident> selectNonLocalPeople(Wrapper<Resident> wrapper, Page page) {
 //        return residentMapper.getNonLocalResident(wrapper,page);

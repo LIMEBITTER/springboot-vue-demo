@@ -61,6 +61,7 @@
                             if(res.code === '200') {
                                 console.log("user", res.data)
                                 this.$message.success("注册成功")
+                                this.$router.push('/login')
                             } else {
                                 this.$message.error(res.msg)
                             }

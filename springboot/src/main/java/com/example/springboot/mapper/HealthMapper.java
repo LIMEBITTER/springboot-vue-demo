@@ -36,4 +36,10 @@ public interface HealthMapper extends BaseMapper<Health> {
 
     @Update("UPDATE health set health_status = 2")
     boolean changeHStatus(Integer id);
+
+    @Select("SELECT temperature,count(temperature) as countTempNum from health GROUP BY temperature")
+    List<HealthDto> tempCountChart();
+
+    @Select("SELECT normal,count(normal) as countNormalNum from health GROUP BY normal")
+    List<HealthDto> getHealthSituation();
 }

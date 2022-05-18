@@ -103,7 +103,7 @@ router.beforeEach((to, from, next) => {
       if (to.path.includes('admin')){
         console.log('进入admin',)
         if (token.isAdmin===1){
-          Vue.prototype.$message('您是管理员用户')
+          // Vue.prototype.$message('您是管理员用户')
           next()
         }else {
           Vue.prototype.$message({message:'非管理员,非法访问！',type:'error'})

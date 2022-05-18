@@ -60,6 +60,16 @@ public class HealthServiceImpl extends ServiceImpl<HealthMapper, Health> impleme
         return healthMapper.changeHStatus(id);
     }
 
+    @Override
+    public List<HealthDto> tempCountChart() {
+        return healthMapper.tempCountChart();
+    }
+
+    @Override
+    public List<HealthDto> getHealthSituation() {
+        return healthMapper.getHealthSituation();
+    }
+
 //    @Override
 //    public boolean save1(Health health) {
 //        return healthMapper.saveHealth(health);

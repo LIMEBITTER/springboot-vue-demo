@@ -143,6 +143,18 @@ public class VolunteerController {
         writer.close();
     }
 
+    /**可视化
+     * 工作地点志愿者人数折线图
+     *
+     * @return
+     */
+    @GetMapping("/getVolAddressChart")
+    @ResponseBody
+    private List<VolunteerDto> getVolAddressChart() {
+
+        return volunteerService.getVolAddressChart();
+    }
+
 }
 
 

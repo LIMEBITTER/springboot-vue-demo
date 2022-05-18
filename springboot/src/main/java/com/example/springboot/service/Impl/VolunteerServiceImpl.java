@@ -53,5 +53,10 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         return volunteerMapper.updateUserVId(id,rid);
     }
 
+    @Override
+    public List<VolunteerDto> getVolAddressChart() {
+        return volunteerMapper.getVolAddressChart();
+    }
+
 
 }

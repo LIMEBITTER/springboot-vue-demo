@@ -53,6 +53,11 @@ public class ResidentDto {
      */
     private int resident_status;
 
+    /**
+     * 查询是否为本地居民时的人数
+     */
+    private  int countTypeOfPeople;
+
 
 
 

@@ -43,8 +43,12 @@ public interface TravelMapper extends BaseMapper<Travel> {
     @Insert("INSERT into resident_travel(rid,traval_id) VALUES(#{rid},#{id})")
     boolean saveResidentTravel(TravelDto travel);
 
-    @Update("update travel set travelStatus = 1 where id = #{id}")
-    boolean changeTStatus(Integer id);
+    @Update("update travel set travelStatus = 2 where id = #{id}")
+    boolean changeSTtatus(Integer id);
 
+    @Select("SELECT travelTool,count(travelTool) as countNum from travel GROUP BY travelTool")
+    List<TravelDto> getTravelToolCount();
 
+    @Select("SELECT travelStatus from travel WHERE id=(SELECT traval_id from resident_travel where rid = #{rid})")
+    Integer selectTravelById(Integer rid);
 }

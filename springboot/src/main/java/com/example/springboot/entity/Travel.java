@@ -24,7 +24,7 @@ public class Travel {
      * 出行工具
      */
 
-    private String travel_tool;
+    private String travelTool;
 
     /**
      * 目的地
@@ -41,5 +41,10 @@ public class Travel {
      */
     @TableField(exist = false)
     private int rid;
+
+    /**
+     * 统计
+     */
+    private int countNum;
 
 }

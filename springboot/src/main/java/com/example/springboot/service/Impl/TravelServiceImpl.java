@@ -62,8 +62,18 @@ public class TravelServiceImpl extends ServiceImpl<TravelMapper, Travel> impleme
     }
 
     @Override
-    public boolean changeTStatus(Integer id) {
-        return travelMapper.changeTStatus(id);
+    public boolean changeSTtatus(Integer id) {
+        return travelMapper.changeSTtatus(id);
+    }
+
+    @Override
+    public List<TravelDto> getTravelToolCount() {
+        return travelMapper.getTravelToolCount();
+    }
+
+    @Override
+    public Integer selectTravelById(Integer rid) {
+        return travelMapper.selectTravelById(rid);
     }
 
 //    @Override

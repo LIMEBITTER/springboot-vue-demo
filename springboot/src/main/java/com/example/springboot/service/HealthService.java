@@ -37,5 +37,9 @@ public interface HealthService extends IService<Health> {
 
     boolean changeHStatus(Integer id);
 
+    List<HealthDto> tempCountChart();
+
+    List<HealthDto> getHealthSituation();
+
 //    boolean save1(Health health);
 }

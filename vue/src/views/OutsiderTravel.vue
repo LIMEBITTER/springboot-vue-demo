@@ -12,7 +12,7 @@
     </div>
 
     <div style="margin: 10px 0">
-      <el-button type="primary" @click="handleAdd">新增 <i class="el-icon-circle-plus-outline"></i></el-button>
+<!--      <el-button type="primary" @click="handleAdd">新增 <i class="el-icon-circle-plus-outline"></i></el-button>-->
       <el-popconfirm
               class="ml-5"
               confirm-button-text='您确认批量删除?'
@@ -25,15 +25,15 @@
       </el-popconfirm>
 
       <!--导入导出-->
-      <el-upload  class="upload-demo" action="http://localhost:9090/user/import"
-                  style="display: inline-block"
-                  :on-success="handleImportSuccess"
-                  :show-file-list="false"
-                  accept=".xls,.xlsx"
-                  :on-error="handleImportError"
-      >
-        <el-button type="primary"  class="ml-5">导入 <i class="el-icon-bottom"></i></el-button>
-      </el-upload>
+<!--      <el-upload  class="upload-demo" action="http://localhost:9090/user/import"-->
+<!--                  style="display: inline-block"-->
+<!--                  :on-success="handleImportSuccess"-->
+<!--                  :show-file-list="false"-->
+<!--                  accept=".xls,.xlsx"-->
+<!--                  :on-error="handleImportError"-->
+<!--      >-->
+<!--        <el-button type="primary"  class="ml-5">导入 <i class="el-icon-bottom"></i></el-button>-->
+<!--      </el-upload>-->
       <el-button type="primary"  @click="exp"   class="ml-5">导出 <i class="el-icon-top"></i></el-button>
     </div>
 
@@ -73,7 +73,7 @@
             <el-button type="danger" slot="reference">删除 <i class="el-icon-remove-outline"></i></el-button>
           </el-popconfirm>
 
-          <el-button type="success" v-if="scope.row.travelStatus===0" @click="changeStatus(scope.row.id)">审核 <i class="el-icon-edit"></i></el-button>
+          <el-button type="success" v-if="scope.row.travelStatus===1" @click="changeSTtatus(scope.row.id)">审核 <i class="el-icon-edit"></i></el-button>
 
 
         </template>
@@ -386,8 +386,8 @@
                 })
 
       },
-      changeStatus(currentRowId){
-        request.get('/travel/changeTStatus',{params:{id:currentRowId}}).then(res=>{
+      changeSTtatus(currentRowId){
+        request.get('/travel/changeSTtatus',{params:{id:currentRowId}}).then(res=>{
           if (res){
             this.$message.success('审核成功！')
             this.load()

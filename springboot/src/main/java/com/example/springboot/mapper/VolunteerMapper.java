@@ -38,4 +38,7 @@ public interface VolunteerMapper extends BaseMapper<Volunteer> {
 
     @Update("UPDATE resident set v_id = #{id} where id = #{rid}")
     boolean updateUserVId(int id, int rid);
+
+    @Select("SELECT workAddress,count(workAddress) as countAddressNum from volunteer GROUP BY workAddress")
+    List<VolunteerDto> getVolAddressChart();
 }
