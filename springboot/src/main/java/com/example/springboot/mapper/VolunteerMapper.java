@@ -22,7 +22,7 @@ public interface VolunteerMapper extends BaseMapper<Volunteer> {
 //            "SELECT resident.id ,resident.`name`,resident.sex,resident.age,resident.tel,volunteer.work_time,volunteer.work_address\n" +
 //                    "FROM volunteer,resident WHERE resident.id=volunteer.id"
 //    )
-    @Select("SELECT v.id,r.name,r.tel,r.sex,v.workTime,v.workAddress from resident r inner join volunteer v on v.id=r.v_id")
+    @Select("SELECT v.id,r.name,r.tel,r.sex,v.workTime,v.workAddress,v.healthStatus from resident r inner join volunteer v on v.id=r.v_id")
     List<VolunteerDto> getAllVolunteerInfo();
 
 //    @Select("SELECT * FROM volunteer v,resident r where v.id=r.id")
@@ -41,4 +41,10 @@ public interface VolunteerMapper extends BaseMapper<Volunteer> {
 
     @Select("SELECT workAddress,count(workAddress) as countAddressNum from volunteer GROUP BY workAddress")
     List<VolunteerDto> getVolAddressChart();
+
+    @Select("SELECT volunteerStatus FROM volunteer WHERE id = (SELECT v_id FROM resident WHERE id = #{id} )")
+    Integer selectVolById(Integer id);
+
+    @Update("UPDATE volunteer set volunteerStatus = 2 where id = (SELECT v_id FROM resident WHERE id = #{id})")
+    boolean changeVStatus(Integer id);
 }

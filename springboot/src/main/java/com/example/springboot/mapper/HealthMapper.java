@@ -34,7 +34,7 @@ public interface HealthMapper extends BaseMapper<Health> {
     @Update("UPDATE resident set health_id = #{id} where id = #{rid}")
     boolean updateHealthId(int id,int rid);
 
-    @Update("UPDATE health set health_status = 2")
+    @Update("UPDATE health set health_status = 2 where id=#{id}")
     boolean changeHStatus(Integer id);
 
     @Select("SELECT temperature,count(temperature) as countTempNum from health GROUP BY temperature")
@@ -42,4 +42,7 @@ public interface HealthMapper extends BaseMapper<Health> {
 
     @Select("SELECT normal,count(normal) as countNormalNum from health GROUP BY normal")
     List<HealthDto> getHealthSituation();
+
+    @Select("SELECT health_status FROM health WHERE id = (SELECT health_id FROM resident WHERE id =#{id})")
+    Integer selectHealthById(Integer id);
 }

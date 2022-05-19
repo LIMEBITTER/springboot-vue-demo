@@ -55,6 +55,11 @@ public class VolunteerDto  {
     private String workAddress;
 
     /**
+     * 当前志愿者审核状态
+     */
+    private int volunteerStatus;
+
+    /**
      * 居民id
      *
      */

@@ -37,4 +37,8 @@ public interface VolunteerService extends IService<Volunteer> {
     boolean updateUserVId(int id, int rid);
 
     List<VolunteerDto> getVolAddressChart();
+
+    Integer selectVolById(Integer id);
+
+    boolean changeVStatus(Integer id);
 }

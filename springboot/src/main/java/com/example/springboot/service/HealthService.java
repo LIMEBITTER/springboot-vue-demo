@@ -41,5 +41,7 @@ public interface HealthService extends IService<Health> {
 
     List<HealthDto> getHealthSituation();
 
+    Integer selectHealthById(Integer id);
+
 //    boolean save1(Health health);
 }

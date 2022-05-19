@@ -155,6 +155,33 @@ public class VolunteerController {
         return volunteerService.getVolAddressChart();
     }
 
+    /**
+     *根据volunteer id查询volunteer—status
+     *
+     * @return Integer
+     */
+    @GetMapping("/selectVolById")
+    private Integer selectVolById(@RequestParam Integer id) {
+//        System.out.println("出行记录增加======="+travel.getId());
+
+        System.out.println("selectHealthById====");
+
+        return volunteerService.selectVolById(id);
+    }
+
+
+    /**修改volunteer_status
+     *
+     * @param id
+     * @return Resident
+     */
+    @GetMapping("/changeVStatus")
+    private boolean changeVStatus(@RequestParam Integer id) {
+        System.out.println("修改volunteer_status=============");
+
+        return volunteerService.changeVStatus(id);
+    }
+
 }
 
 

@@ -68,6 +68,8 @@
                             @confirm="handleDelete(scope.row.id)">
                         <el-button type="danger" slot="reference">删除 <i class="el-icon-remove-outline"></i></el-button>
                     </el-popconfirm>
+                    <el-button type="success" v-if="scope.row.volunteerStatus===1" @click="changeVtatus(scope.row.id)">审核 <i class="el-icon-edit"></i></el-button>
+
 
                 </template>
             </el-table-column>
@@ -383,6 +385,17 @@
 
                     })
 
+            },
+
+            changeVtatus(currentRowId){
+                request.get('/volunteer/changeVStatus',{params:{id:currentRowId}}).then(res=>{
+                    if (res){
+
+                        this.$message.success('审核成功！')
+                        this.load()
+                    }
+
+                })
             }
         }
     }

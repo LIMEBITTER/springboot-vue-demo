@@ -65,4 +65,9 @@ public class HealthDto {
      */
     private int countNormalNum;
 
+    /**
+     * 当前居民health——status
+     */
+    private int healthStatus;
+
 }

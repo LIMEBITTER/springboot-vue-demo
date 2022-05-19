@@ -72,7 +72,7 @@
                             @confirm="handleDelete(scope.row.id)">
                         <el-button type="danger" slot="reference">删除 <i class="el-icon-remove-outline"></i></el-button>
                     </el-popconfirm>
-                    <el-button type="success" v-if="scope.row.health_status===1" @click="changeStatus(scope.row.id)">审核 <i class="el-icon-edit"></i></el-button>
+                    <el-button type="success" v-if="scope.row.healthStatus===1" @click="changeHtatus(scope.row.id)">审核 <i class="el-icon-edit"></i></el-button>
 
                 </template>
             </el-table-column>
@@ -278,6 +278,7 @@
 
             //用户编辑按钮
             handleEdit(row){
+                console.log('当前row',row)
                 this.form=Object.assign({},row)//将行对象的数据赋予到弹窗中
                 this.dialogFormVisible =  true
             },
@@ -403,7 +404,7 @@
                 })
 
           },
-            changeStatus(currentRowId){
+            changeHtatus(currentRowId){
                 request.get('/health/changeHStatus',{params:{id:currentRowId}}).then(res=>{
                     if (res){
 

@@ -70,6 +70,11 @@ public class HealthServiceImpl extends ServiceImpl<HealthMapper, Health> impleme
         return healthMapper.getHealthSituation();
     }
 
+    @Override
+    public Integer selectHealthById(Integer id) {
+        return healthMapper.selectHealthById(id);
+    }
+
 //    @Override
 //    public boolean save1(Health health) {
 //        return healthMapper.saveHealth(health);

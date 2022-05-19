@@ -58,7 +58,7 @@ public class HealthController {
 
     /**
      * 新增用户健康（user）
-     * @param health
+     * @param healthDto
      * @return
      */
     @PostMapping("/save2")
@@ -78,7 +78,7 @@ public class HealthController {
      */
     @GetMapping("/changeHStatus")
     private boolean changeHStatus(@RequestParam Integer id) {
-        System.out.println("修改resident_status============="+healthService.changeHStatus(id));
+        System.out.println("修改health_status=============");
 
         return healthService.changeHStatus(id);
     }
@@ -170,6 +170,22 @@ public class HealthController {
     public List<HealthDto> getHealthSituation() {
         return healthService.getHealthSituation();
     }
+
+    /**
+     *根据health id查询health—status
+     *
+     * @return Integer
+     */
+    @GetMapping("/selectHealthById")
+    private Integer selectHealthById(@RequestParam Integer id) {
+//        System.out.println("出行记录增加======="+travel.getId());
+
+        System.out.println("selectHealthById===="+healthService.selectHealthById(id));
+
+        return healthService.selectHealthById(id);
+    }
+
+
 
 
 

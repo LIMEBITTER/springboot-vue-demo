@@ -58,5 +58,15 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         return volunteerMapper.getVolAddressChart();
     }
 
+    @Override
+    public Integer selectVolById(Integer id) {
+        return volunteerMapper.selectVolById(id);
+    }
+
+    @Override
+    public boolean changeVStatus(Integer id) {
+        return volunteerMapper.changeVStatus(id);
+    }
+
 
 }
