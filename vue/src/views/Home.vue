@@ -32,7 +32,7 @@
                     <div >隔离人数</div>
 
                     <div style="padding: 10px 0;text-align: center;font-weight: bold">
-                        0
+                        {{this.inmormalTotal}}
                     </div>
 
                 </el-card>
@@ -93,7 +93,8 @@
             return{
                 residentTotal:0,
                 outsiderTotal:0,
-                normalTotal:null,
+                normalTotal:0,
+                inmormalTotal:0,
 
                 pageNum:1,
                 pageSize:20,
@@ -124,42 +125,37 @@
         },
         methods:{
             getData(){
-                this.request.get("/resident/local",{
-                        params:{
-                            pageNum:this.pageNum,
-                            pageSize:this.pageSize,
+                this.request.get("/resident/getTypeOfPeople").then(res =>{
+                    this.residentTotal=res[0].countTypeOfPeople
+                    this.outsiderTotal=res[1].countTypeOfPeople
 
-                        }
-                    }
-                ).then(res =>{
-                    this.residentTotal=res.records.length;
                     console.log('local',this.residentTotal)
 
                 })
-                //
-                this.request.get("/resident/nonLocal",{
-                        params:{
-                            pageNum:this.pageNum,
-                            pageSize:this.pageSize,
-                        }
-                    }
-                ).then(res =>{
-                    // console.log('residentres',res)
-                    // this.tableData=res.records;
-                    this.outsiderTotal=res.records.length;
-                    console.log('outsiderTotal',this.outsiderTotal)
-
-                })
-                request.get('/health/getAllHealth',{
-                            params:{
-                                pageNum:this.pageNum,
-                                pageSize:this.pageSize,
-                            }
-                }).then(res=>{
-                    this.normalTotal=res.records.length
-                    console.log('normalTotal',this.normalTotal)
-
-                })
+            //     //
+            //     this.request.get("/resident/nonLocal",{
+            //             params:{
+            //                 pageNum:this.pageNum,
+            //                 pageSize:this.pageSize,
+            //             }
+            //         }
+            //     ).then(res =>{
+            //         // console.log('residentres',res)
+            //         // this.tableData=res.records;
+            //         this.outsiderTotal=res.records.length;
+            //         console.log('outsiderTotal',this.outsiderTotal)
+            //
+            //     })
+            //     request.get('/health/getAllHealth',{
+            //                 params:{
+            //                     pageNum:this.pageNum,
+            //                     pageSize:this.pageSize,
+            //                 }
+            //     }).then(res=>{
+            //         this.normalTotal=res.records.length
+            //         console.log('normalTotal',this.normalTotal)
+            //
+            //     })
             },
 
             //2.出行工具的使用人数的环图
@@ -244,6 +240,8 @@
 
                     request.get('/health/getHealthSituation').then(res=>{
                         const data = res
+                        this.normalTotal = res[0].countNormalNum
+                        this.inmormalTotal = res[1].countNormalNum
                         console.log('residentHealChart',data)
                         const piePlot = new Pie('residentHealChart', {
                             appendPadding: 10,

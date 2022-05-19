@@ -55,12 +55,14 @@
             //调取腾讯api
             this.$axios.post('/api/g2/getOnsInfo?name=disease_h5')
                 .then((res) => {
-                    var jsonData = JSON.parse(res.data.data)
+                    // console.log('腾讯api：',JSON.stringify(res.data.data.chinaTotal))
+
+                    var jsonData = JSON.parse(JSON.stringify(res.data.data))
+                    console.log('腾讯api',jsonData)
                     this.caseNum = jsonData
                     // this.provinceList = jsonData
                     // this.provinceList = jsonData1
                     // console.log('provinceList',jsonData1)
-                    console.log('腾讯api：',this.caseNum)
                     // console.log('res',res.data.data)
             })
             // console.log('provinceList',this.provinceList)
