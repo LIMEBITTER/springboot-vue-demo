@@ -76,6 +76,11 @@ public class TravelServiceImpl extends ServiceImpl<TravelMapper, Travel> impleme
         return travelMapper.selectTravelById(rid);
     }
 
+    @Override
+    public boolean updateByIdM(Travel travel) {
+        return travelMapper.updateByIdM(travel);
+    }
+
 //    @Override
 //    public IPage<TravelDto> getNonTravelDto(Wrapper<TravelDto> wrapper, Page page) {
 //        return travelMapper.getNonTravelDto(wrapper,page);

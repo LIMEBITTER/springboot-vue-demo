@@ -41,4 +41,6 @@ public interface TravelService extends IService<Travel> {
 
 
     Integer selectTravelById(Integer rid);
+
+    boolean updateByIdM(Travel travel);
 }

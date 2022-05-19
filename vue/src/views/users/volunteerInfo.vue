@@ -131,13 +131,13 @@
 
                     request.get('/volunteer/selectVolById',{params:{id:this.form.rid}}).then(res=>{
                         // 0未提交
-                        if (res===null){
+                        if (res.volunteerStatus===null){
                             this.active=1
                             // 1提交了，但在审核
-                        }else if (res===1){
+                        }else if (res.volunteerStatus===1){
                             this.active=2
                             //2 审核成功
-                        }else if(res===2){
+                        }else if(res.volunteerStatus===2){
                             this.active=3
                         }
                     })

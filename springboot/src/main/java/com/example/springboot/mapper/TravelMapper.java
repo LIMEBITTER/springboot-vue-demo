@@ -36,7 +36,7 @@ public interface TravelMapper extends BaseMapper<Travel> {
     @Select("SELECT * from resident_travel rt inner join resident r on rt.rid=r.id inner join travel t on rt.traval_id=t.id ${ew.customSqlSegment} and r.local_people='否'")
     IPage<TravelDto> getNonTravelDto(@Param(Constants.WRAPPER) Wrapper<TravelDto> wrapper,IPage page);
 
-    @Insert("INSERT into travel(id,travelTool,destination,totalman,travelStatus) VALUES(#{id},#{travelTool},#{destination},#{totalman},0)")
+    @Insert("INSERT into travel(id,travelTool,destination,totalman,travelStatus) VALUES(#{id},#{travelTool},#{destination},#{totalman},1)")
     @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
     int save2(TravelDto travel);
 
@@ -51,4 +51,7 @@ public interface TravelMapper extends BaseMapper<Travel> {
 
     @Select("SELECT travelStatus from travel WHERE id=(SELECT traval_id from resident_travel where rid = #{rid})")
     Integer selectTravelById(Integer rid);
+
+    @Update("UPDATE travel SET travelTool=#{travelTool}, destination=#{destination}, totalman=#{totalman}  WHERE id=#{id} ")
+    boolean updateByIdM(Travel travel);
 }

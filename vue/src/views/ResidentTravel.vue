@@ -275,6 +275,13 @@
                     console.log('表单校验',valid)
                     if(valid){
                         console.log('表单合法！')
+
+                        request.get('/travel/selectTravelById',{params:{rid:this.form.rid}}).then(res=>{
+                            // 0未提交
+
+
+                        })
+
                         request.post("/travel",this.form).then(res =>{
                             //判断是否保存成功
                             console.log('post后端')

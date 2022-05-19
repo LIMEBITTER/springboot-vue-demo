@@ -55,12 +55,9 @@ public class VolunteerController {
      */
     @PostMapping
     private boolean save(@RequestBody Volunteer volunteer) {
-        if (volunteer.getId()==0){
-            return volunteerService.save(volunteer);
 
-        }else {
-            return volunteerService.updateById(volunteer);
-        }
+            return volunteerService.updateByIdM(volunteer);
+
     }
 
 
@@ -161,7 +158,7 @@ public class VolunteerController {
      * @return Integer
      */
     @GetMapping("/selectVolById")
-    private Integer selectVolById(@RequestParam Integer id) {
+    private VolunteerDto selectVolById(@RequestParam Integer id) {
 //        System.out.println("出行记录增加======="+travel.getId());
 
         System.out.println("selectHealthById====");

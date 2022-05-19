@@ -59,13 +59,18 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
     }
 
     @Override
-    public Integer selectVolById(Integer id) {
+    public VolunteerDto selectVolById(Integer id) {
         return volunteerMapper.selectVolById(id);
     }
 
     @Override
     public boolean changeVStatus(Integer id) {
         return volunteerMapper.changeVStatus(id);
+    }
+
+    @Override
+    public boolean updateByIdM(Volunteer volunteer) {
+        return volunteerMapper.updateByIdM(volunteer);
     }
 
 

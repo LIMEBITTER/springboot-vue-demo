@@ -28,4 +28,6 @@ public class Volunteer {
      * 工作地点
      */
     private String workAddress;
+
+
 }

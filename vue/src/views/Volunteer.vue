@@ -275,18 +275,25 @@
                     console.log('表单校验',valid)
                     if(valid){
                         console.log('表单合法！')
-                        request.post("/volunteer",this.form).then(res =>{
-                            //判断是否保存成功
-                            console.log('post后端')
-                            if(res) {
-                                console.log('post后端返回值',res)
-                                this.$message.success("保存成功!")
-                                this.dialogFormVisible=false
-                                this.load()
-                            }else{
-                                this.$message.error("保存失败!")
-                            }
+                        request.get('/volunteer/selectVolById',{params:{id:this.form.id}}).then(res=>{
+                            console.log('获取志愿者id',res)
+                            this.form.id = res.id
+
+                            request.post("/volunteer",this.form).then(res =>{
+                                //判断是否保存成功
+                                console.log('post后端')
+                                if(res) {
+                                    console.log('post后端返回值',res)
+                                    this.$message.success("保存成功!")
+                                    this.dialogFormVisible=false
+                                    this.load()
+                                }else{
+                                    this.$message.error("保存失败!")
+                                }
+                            })
+
                         })
+
                     }else{
                         console.log("表单格式非法!")
 

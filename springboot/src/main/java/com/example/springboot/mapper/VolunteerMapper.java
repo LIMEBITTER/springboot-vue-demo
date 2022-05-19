@@ -42,9 +42,12 @@ public interface VolunteerMapper extends BaseMapper<Volunteer> {
     @Select("SELECT workAddress,count(workAddress) as countAddressNum from volunteer GROUP BY workAddress")
     List<VolunteerDto> getVolAddressChart();
 
-    @Select("SELECT volunteerStatus FROM volunteer WHERE id = (SELECT v_id FROM resident WHERE id = #{id} )")
-    Integer selectVolById(Integer id);
+    @Select("SELECT * FROM volunteer WHERE id = (SELECT v_id FROM resident WHERE id = #{id} )")
+    VolunteerDto selectVolById(Integer id);
 
     @Update("UPDATE volunteer set volunteerStatus = 2 where id = (SELECT v_id FROM resident WHERE id = #{id})")
     boolean changeVStatus(Integer id);
+
+    @Update("UPDATE volunteer SET workTime=#{workTime}, workAddress=#{workAddress} WHERE id=#{id}")
+    boolean updateByIdM(Volunteer volunteer);
 }
